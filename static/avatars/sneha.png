@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="gradSneha" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5E62" />
+      <stop offset="100%" stop-color="#FF9966" />
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#gradSneha)" />
+  <circle cx="100" cy="80" r="40" fill="#FFE5D9" />
+  <!-- Hair -->
+  <path d="M 60 80 Q 100 20 140 80 Q 145 120 135 130 Q 120 110 100 110 Q 80 110 65 130 Z" fill="#2D221E" />
+  <!-- Shoulders -->
+  <path d="M 40 180 C 40 130, 160 130, 160 180 Z" fill="#6C5CE7" />
+  <!-- Earring / Indic touch -->
+  <circle cx="62" cy="90" r="4" fill="#FFD700" />
+  <circle cx="138" cy="90" r="4" fill="#FFD700" />
+</svg>

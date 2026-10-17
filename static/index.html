@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suno (सुनो / విను) — Production Voice Dating for IIIT-H</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header>
+    <div class="logo-group">
+      <div class="logo-badge">🎙️</div>
+      <div class="logo-text">
+        <h1>Suno <span style="font-size: 15px; font-weight: 500; color: #a4b0be;">(सुनो / విను)</span></h1>
+        <p>Voice-First • Language-Matched • IIIT-H</p>
+      </div>
+    </div>
+
+    <div class="user-status-pill">
+      <span id="current-user-pseudonym">🎭 Vindhya Chai Theorist</span>
+      <span class="insti-badge" id="insti-status-badge">🛡️ Verified IIIT-H Scholar</span>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('deck')">🎙️ Voice Deck (Blind Mode)</button>
+    <button class="tab-btn stage-highlight" onclick="switchTab('stage-demo')">⚡ 90s Stage Demo</button>
+    <button class="tab-btn" onclick="switchTab('icebreaker')">💬 AI Icebreaker Voice Call</button>
+    <button class="tab-btn" onclick="switchTab('arena')">⚔️ Dual-Voice Match Arena</button>
+    <button class="tab-btn" onclick="switchTab('kivi-studio')">✨ Kivi Voice Studio</button>
+    <button class="tab-btn" onclick="switchTab('verification')">🪪 Insti ID OCR Portal</button>
+    <button class="tab-btn" onclick="switchTab('safety')">🔒 Consent & Safety Vault</button>
+  </nav>
+
+  <!-- Main Container -->
+  <main>
+
+    <!-- ========================================== -->
+    <!-- TAB 1: Voice Deck (Blind Mode)             -->
+    <!-- ========================================== -->
+    <section id="tab-deck" class="tab-content active">
+      <div class="deck-container">
+        
+        <!-- Deck Header Bar -->
+        <div style="width: 100%; max-width: 500px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 13px; color: var(--text-muted);">
+            Campus Deck: <strong id="profile-counter" style="color: #fff;">1 of 4</strong>
+          </div>
+          <button class="tab-btn" style="padding: 6px 14px; font-size: 12px; background: linear-gradient(135deg, var(--accent-saffron), var(--accent-amber)); color: #fff; font-weight: 700; box-shadow: var(--glow-saffron);" onclick="openLiveRecordModal()">
+            🎙️ Record My Voice Bio
+          </button>
+        </div>
+
+        <!-- The Voice Card -->
+        <div class="voice-card" id="active-card">
+          
+          <div class="card-header">
+            <div class="avatar-wrapper blurred" id="card-avatar-wrapper">
+              <img id="card-avatar-img" src="/static/avatars/sneha.svg" alt="Avatar">
+              <div class="avatar-aura-ring"></div>
+            </div>
+            <div class="card-meta">
+              <div class="card-pseudonym" id="card-pseudonym">
+                Kadamba Sambar Purist
+              </div>
+              <div class="card-submeta" id="card-branch">ECE 3rd Year • UG 2022</div>
+              <span class="campus-chip" id="card-campus-vibe">Robotics Lab • Kadamba South • Filter Coffee</span>
+            </div>
+          </div>
+
+          <!-- Audio Player Box -->
+          <div class="audio-player-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="prompt-badge">Voice Prompt</span>
+              <span style="font-size: 11px; color: var(--text-dim);" id="audio-format-badge">Sarvam Bulbul (v3)</span>
+            </div>
+            <div class="prompt-question" id="card-prompt-question">"Defend your mess order"</div>
+
+            <div class="audio-controls-row">
+              <button class="play-btn" id="card-play-btn" onclick="togglePlayActiveCard()">▶</button>
+              <canvas class="waveform-canvas" id="card-waveform"></canvas>
+              <span class="audio-time" id="card-audio-time">0:00 / 0:15</span>
+            </div>
+
+            <!-- Transcript Reveal Accordion -->
+            <details style="font-size: 12px; color: var(--text-muted); cursor: pointer; margin-top: 4px;">
+              <summary style="outline: none; color: var(--accent-amber); font-weight: 600;">View Sarvam Saaras transcript</summary>
+              <p id="card-transcript" style="margin-top: 6px; padding: 10px; background: rgba(0,0,0,0.4); border-radius: 8px; line-height: 1.4; color: #fff; font-family: var(--font-sans);">
+                "Honestly, anyone who slanders Kadamba South mess dosa on Sunday mornings has never pulled an all-nighter for Embedded Systems..."
+              </p>
+            </details>
+          </div>
+
+          <!-- Killer Feature: The Language Match Box -->
+          <div class="language-match-box" id="card-match-box">
+            <div class="match-header-row">
+              <span class="match-synergy-badge" id="card-synergy-badge">🔥 92% Code-Switch Synergy</span>
+              <span class="match-rhythm" id="card-rhythm-badge">Tenglish x Hinglish Bridge</span>
+            </div>
+            <div class="match-reasoning" id="card-match-reasoning">
+              "Sarvam 105B Reasoning: You both balance technical problem-solving with spontaneous campus food debates. Your Hinglish and her Tenglish conversational cadences flow seamlessly."
+            </div>
+            <div class="campus-tags" id="card-campus-tags">
+              <span class="tag-pill">🏛️ Kadamba Mess</span>
+              <span class="tag-pill">☕ Tantra Chai</span>
+              <span class="tag-pill">💻 Embedded C</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="deck-actions">
+            <button class="action-btn btn-pass" onclick="nextProfile(-1)">
+              ✖ Pass
+            </button>
+            <button class="action-btn btn-reveal" id="btn-reveal-toggle" onclick="toggleMutualReveal()">
+              🔓 Mutual Reveal
+            </button>
+            <button class="action-btn btn-match" onclick="enterMatchLounge()">
+              💬 Voice Warm-Up
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Campus Nudge Alert -->
+        <div style="width: 100%; max-width: 500px; background: rgba(46, 213, 115, 0.08); border: 1px solid rgba(46, 213, 115, 0.25); border-radius: 12px; padding: 14px; font-size: 13px; color: #d2dae2; display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 20px;">📍</span>
+          <div>
+            <strong style="color: #2ed573;">Campus-Aware Nudge:</strong> Both free after 9:30 PM — chai at Tantra or JC?
+            <div style="font-size: 11px; color: var(--text-dim); margin-top: 2px;">Coarse campus hub only • Never exact GPS coordinates</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: ⚡ 90s Judge Stage Demo              -->
+    <!-- ========================================== -->
+    <section id="tab-stage-demo" class="tab-content">
+      <div class="stage-demo-card">
+        
+        <div class="stage-banner">
+          <div class="stage-banner-text">
+            <h2>The 90-Second Stage Demo</h2>
+            <p>Experience the exact pitch flow live: Voice swiping, Indic code-switching, AI Warm-up host, live translation & Kivi.</p>
+          </div>
+          <button class="btn-launch-demo" id="btn-run-stage-demo" onclick="triggerStageDemo()">
+            <span>▶️</span> Run Live 90s Demo
+          </button>
+        </div>
+
+        <!-- Timeline Stepper -->
+        <div class="timeline-stepper">
+          
+          <div class="timeline-step" id="step-1">
+            <div class="step-num-bubble">1</div>
+            <div class="step-content">
+              <div class="step-title">Speaker 1: Kabir (Hinglish Voice Intro)</div>
+              <div class="step-desc">"Bhai simple funda hai. LitC debate me participate karenge, cultural night me front row moshpit, aur raat ko 3 AM Tantra me chai..."</div>
+              <div class="step-payload-box" id="step-1-payload" style="display:none;"></div>
+            </div>
+          </div>
+
+          <div class="timeline-step" id="step-2">
+            <div class="step-num-bubble">2</div>
+            <div class="step-content">
+              <div class="step-title">Speaker 2: Sneha (Telugu-English Voice Intro)</div>
+              <div class="step-desc">"Honestly, anyone who slanders Kadamba South mess dosa on Sunday mornings has never pulled an all-nighter for Embedded Systems..."</div>
+              <div class="step-payload-box" id="step-2-payload" style="display:none;"></div>
+            </div>
+          </div>
+
+          <div class="timeline-step" id="step-3">
+            <div class="step-num-bubble">3</div>
+            <div class="step-content">
+              <div class="step-title">Sarvam Language Match Engine: 92% Synergy</div>
+              <div class="step-desc">Detects Hindi-English vs Telugu-English code-switching overlap and IIIT campus lexicon (Kadamba, Tantra, LitC).</div>
+              <div class="step-payload-box" id="step-3-payload" style="display:none;"></div>
+            </div>
+          </div>
+
+          <div class="timeline-step" id="step-4">
+            <div class="step-num-bubble">4</div>
+            <div class="step-content">
+              <div class="step-title">Sarvam AI Icebreaker Host: Guided Call Kickoff</div>
+              <div class="step-desc">Sarvam 105B creates a hyper-campus debate prompt and voices it live with Sarvam Bulbul TTS.</div>
+              <div class="step-payload-box" id="step-4-payload" style="display:none;"></div>
+            </div>
+          </div>
+
+          <div class="timeline-step" id="step-5">
+            <div class="step-num-bubble">5</div>
+            <div class="step-content">
+              <div class="step-title">Live Cross-Language Translation (Hindi ➔ Telugu + TTS)</div>
+              <div class="step-desc">Kabir speaks Hindi; Sarvam translates to Telugu text and speaks it aloud with Bulbul Telugu voice.</div>
+              <div class="step-payload-box" id="step-5-payload" style="display:none;"></div>
+            </div>
+          </div>
+
+          <div class="timeline-step" id="step-6">
+            <div class="step-num-bubble">6</div>
+            <div class="step-content">
+              <div class="step-title">Kivi Power Layer: Hands-Free Voice Dictation & Tone Polish</div>
+              <div class="step-desc">Dictates rough college speech and polishes into witty dating chat while preserving campus slang.</div>
+              <div class="step-payload-box" id="step-6-payload" style="display:none;"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: 💬 AI Icebreaker Voice Call          -->
+    <!-- ========================================== -->
+    <section id="tab-icebreaker" class="tab-content">
+      <div class="icebreaker-container">
+        
+        <!-- Left: Host Agent & Debate Arena -->
+        <div class="icebreaker-host-card">
+          <div class="host-badge-row">
+            <div class="host-avatar">🤖</div>
+            <div>
+              <div style="font-weight: 700; color: #fff;">Suno AI Icebreaker Host</div>
+              <div style="font-size: 11px; color: var(--accent-purple);">Powered by Sarvam-105B & Bulbul TTS</div>
+            </div>
+          </div>
+
+          <div style="background: rgba(155, 89, 182, 0.1); border: 1px solid rgba(155, 89, 182, 0.25); border-radius: 12px; padding: 16px;">
+            <div style="font-size: 11px; color: var(--accent-purple); font-weight: 700; text-transform: uppercase;">Current Challenge</div>
+            <div id="icebreaker-topic" style="font-size: 17px; font-weight: 700; color: #fff; margin-top: 4px;">
+              The Great IIIT-H Food & All-Nighter Debate
+            </div>
+            <div id="icebreaker-script" style="font-size: 13px; color: #d2dae2; margin-top: 8px; line-height: 1.5;">
+              "Welcome Kabir and Sneha! Here is your warm-up challenge: Sneha, defend Kadamba South mess in 20 seconds; Kabir, defend 2 AM Tantra maggi!"
+            </div>
+            <button class="tab-btn" style="margin-top: 12px; background: rgba(155, 89, 182, 0.25); color: #fff; width: 100%; justify-content: center; font-weight: 600;" onclick="playHostAudio()">
+              🔊 Listen to AI Host (Bulbul TTS)
+            </button>
+          </div>
+
+          <!-- User's Live Spoken Defense / Rebuttal -->
+          <div style="background: rgba(10, 12, 20, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="font-size: 12px; color: var(--accent-saffron); font-weight: 700; text-transform: uppercase;">
+              🎙️ Speak Your Defense (Interactive Live Turn)
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted);">
+              Speak your 15-second response into your microphone or type below:
+            </div>
+            
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="rebuttal-input" placeholder="e.g., Kadamba sambar is pure emotion, nobody can touch Sunday dosa..." style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; color: #fff; font-size: 13px;">
+              <button class="tab-btn" id="rebuttal-mic-btn" style="background: rgba(255, 71, 87, 0.2); color: #ff4757; border: 1px solid rgba(255, 71, 87, 0.4);" onclick="toggleRebuttalMic()">
+                🎙️ Mic
+              </button>
+            </div>
+
+            <button class="tab-btn" style="background: var(--accent-saffron); color: #fff; font-weight: 700; justify-content: center; padding: 10px;" onclick="submitRebuttal()">
+              🚀 Submit Defense & Get AI Score
+            </button>
+
+            <!-- Rebuttal Result Box -->
+            <div id="rebuttal-result-box" style="display: none; margin-top: 6px; background: rgba(0,0,0,0.4); border-radius: 8px; padding: 12px; border: 1px solid rgba(46, 213, 115, 0.3);">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Real-Time Cross-Language Translation -->
+          <div style="background: rgba(10, 12, 20, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 11px; color: var(--accent-amber); font-weight: 700; text-transform: uppercase;">
+              Live Cross-Language Translation
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted);">
+              Type or speak in Hindi — Sarvam translates live to Telugu with synthesized voice:
+            </div>
+            <input type="text" id="translate-input" value="Bhai sach me Kadamba sambhar bahut mast hai." style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px; color: #fff; font-size: 13px;">
+            <button class="tab-btn" style="background: var(--accent-amber); color: #000; font-weight: 700; justify-content: center;" onclick="runLiveTranslate()">
+              Translate & Speak in Telugu ➔
+            </button>
+            <div id="translate-output" style="font-size: 13px; color: #2ed573; margin-top: 4px; font-weight: 600;"></div>
+          </div>
+
+        </div>
+
+        <!-- Right: Real-Time Chat Thread -->
+        <div class="chat-thread-card">
+          <div style="padding-bottom: 12px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 700; color: #fff;" id="chat-partner-name">Kadamba Sambar Purist (Sneha)</div>
+            <span class="insti-badge">🔒 Ephemeral Mode On</span>
+          </div>
+
+          <div class="chat-messages" id="chat-messages-container">
+            <div class="chat-msg them">
+              <div>"Kadamba dosa + sambar is peak institution culture. Unmatched."</div>
+              <div class="translation-subtext">
+                <span>Telugu-English Mix</span>
+                <button onclick="playSampleTTS('Kadamba dosa sambar is peak institution culture')" style="background:none; border:none; color:#ffd32a; cursor:pointer;">🔊</button>
+              </div>
+            </div>
+
+            <div class="chat-msg me">
+              <div>"Bhai par 2 AM Tantra maggi ke bina lab assignment compile nahi hoti!"</div>
+              <div class="translation-subtext">
+                <span>Telugu: "బ్రదర్, కానీ 2 AM తంత్ర మ్యాగీ లేకుండా ల్యాబ్ అసైన్‌మెంట్ కంపైల్ కాదు!"</span>
+                <button onclick="playSampleTTS('Bro, without 2 AM Tantra maggi, lab assignments do not compile!')" style="background:none; border:none; color:#ffd32a; cursor:pointer;">🔊</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kivi Voice Dictation Bar -->
+          <div class="kivi-bar">
+            <div class="kivi-header">
+              <span>🎙️ Kivi Voice Layer (Sarvam Desktop AI)</span>
+              <span style="font-size: 10px; color: var(--text-dim);">Hold to dictate</span>
+            </div>
+
+            <div class="kivi-tones">
+              <span class="kivi-tone-chip active" onclick="setKiviTone('campus_chill', this)">🕶️ Campus Chill</span>
+              <span class="kivi-tone-chip" onclick="setKiviTone('nerdy_witty', this)">⚡ Nerdy / Tech Witty</span>
+              <span class="kivi-tone-chip" onclick="setKiviTone('direct_warm', this)">☕ Direct & Warm</span>
+              <span class="kivi-tone-chip" onclick="setKiviTone('poetic_indic', this)">🌸 Poetic Indic</span>
+            </div>
+
+            <div class="kivi-input-row">
+              <input type="text" id="kivi-input" placeholder="Dictate rough words (e.g. 'kal shaam tantra chai scene banate hai')...">
+              <button class="kivi-mic-btn" id="kivi-chat-mic" title="Hold to dictate via mic" onmousedown="startKiviHold()" onmouseup="stopKiviHold()" ontouchstart="startKiviHold()" ontouchend="stopKiviHold()">🎙️</button>
+              <button class="btn-send-kivi" onclick="sendKiviMessage()">Send</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: ⚔️ Dual-Voice Match Arena            -->
+    <!-- ========================================== -->
+    <section id="tab-arena" class="tab-content">
+      <div style="max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+        
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 26px;">
+          <h2 style="font-size: 22px; font-weight: 800; color: #fff;">Dual-Voice Match Arena</h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            Test the live thesis on stage: Compare any two speakers' voices in real time. Sarvam Saaras transcribes both, analyzes Indic code-switching, and Sarvam 105B computes conversational chemistry.
+          </p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px;">
+            
+            <!-- Speaker 1 Box -->
+            <div style="background: rgba(10, 12, 20, 0.6); border: 1px solid rgba(255, 107, 53, 0.3); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+              <div style="font-weight: 700; color: var(--accent-saffron); font-size: 14px;">Speaker 1 (e.g. Kabir / Judge 1)</div>
+              <textarea id="arena-text-1" rows="3" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; color: #fff; font-size: 13px; outline: none;">Bhai simple funda hai. LitC debate me participate karenge, cultural night me front row moshpit, aur raat ko teen baje Tantra me maggi aur chai.</textarea>
+              <button class="tab-btn" id="arena-mic-1" style="background: rgba(255,107,53,0.15); color: #ff9f7f; justify-content: center;" onclick="recordArenaSpeaker(1)">
+                🎙️ Record Speaker 1 Live
+              </button>
+            </div>
+
+            <!-- Speaker 2 Box -->
+            <div style="background: rgba(10, 12, 20, 0.6); border: 1px solid rgba(46, 213, 115, 0.3); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+              <div style="font-weight: 700; color: var(--accent-cyan); font-size: 14px;">Speaker 2 (e.g. Sneha / Judge 2)</div>
+              <textarea id="arena-text-2" rows="3" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; color: #fff; font-size: 13px; outline: none;">Honestly, anyone who slanders Kadamba South mess dosa on Sunday mornings has never pulled an all-nighter for Embedded Systems.</textarea>
+              <button class="tab-btn" id="arena-mic-2" style="background: rgba(46,213,115,0.15); color: #2ed573; justify-content: center;" onclick="recordArenaSpeaker(2)">
+                🎙️ Record Speaker 2 Live
+              </button>
+            </div>
+
+          </div>
+
+          <button class="tab-btn" id="btn-run-arena" style="margin-top: 18px; width: 100%; background: linear-gradient(135deg, var(--accent-saffron), var(--accent-purple)); color: #fff; font-weight: 800; font-size: 15px; padding: 14px; justify-content: center; box-shadow: var(--glow-saffron);" onclick="runArenaComparison()">
+            ⚡ Calculate Live Language Synergy (Sarvam Saaras + 105B)
+          </button>
+
+          <!-- Arena Match Report -->
+          <div id="arena-results-box" style="display: none; margin-top: 20px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px;">
+            <!-- Rendered via JS -->
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 5: ✨ Kivi Voice Studio                 -->
+    <!-- ========================================== -->
+    <section id="tab-kivi-studio" class="tab-content">
+      <div style="max-width: 750px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+        
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 26px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <h2 style="font-size: 22px; font-weight: 800; color: #fff;">Kivi Voice Dictation Studio</h2>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+                Sarvam's voice-first AI desktop layer. Speak naturally in messy colloquial Hinglish/Tenglish, format in your desired dating tone, and preview with Bulbul TTS.
+              </p>
+            </div>
+            <span class="insti-badge" style="background: rgba(255,107,53,0.15); color: #ff9f7f; border-color: rgba(255,107,53,0.3);">
+              Powered by Saaras V4 + Bulbul
+            </span>
+          </div>
+
+          <!-- Studio Recording Bar -->
+          <div style="margin-top: 20px; background: rgba(10, 12, 20, 0.7); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+            
+            <div style="font-size: 12px; font-weight: 700; color: var(--accent-saffron); text-transform: uppercase;">
+              1. Choose Dating Tone
+            </div>
+            <div class="kivi-tones">
+              <span class="kivi-tone-chip active" id="studio-tone-campus_chill" onclick="setStudioTone('campus_chill')">🕶️ Campus Chill</span>
+              <span class="kivi-tone-chip" id="studio-tone-nerdy_witty" onclick="setStudioTone('nerdy_witty')">⚡ Nerdy / Tech Witty</span>
+              <span class="kivi-tone-chip" id="studio-tone-direct_warm" onclick="setStudioTone('direct_warm')">☕ Direct & Warm</span>
+              <span class="kivi-tone-chip" id="studio-tone-poetic_indic" onclick="setStudioTone('poetic_indic')">🌸 Poetic Indic</span>
+            </div>
+
+            <div style="font-size: 12px; font-weight: 700; color: var(--accent-saffron); text-transform: uppercase; margin-top: 6px;">
+              2. Dictate Naturally or Enter Colloquial Speech
+            </div>
+            <textarea id="studio-speech-input" rows="3" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; color: #fff; font-size: 14px; outline: none;">yaar kal sham ko tantra pe maggi aur chai scene banate hai, thoda chill karenge assignments ke baad</textarea>
+
+            <div style="display: flex; gap: 10px;">
+              <button class="tab-btn" id="studio-mic-btn" style="background: rgba(255, 71, 87, 0.2); color: #ff4757; border: 1px solid rgba(255, 71, 87, 0.4); flex: 1; justify-content: center; font-weight: 700;" onclick="toggleStudioMic()">
+                🎙️ Speak to Mic (Saaras STT)
+              </button>
+              <button class="tab-btn" style="background: var(--accent-saffron); color: #fff; font-weight: 800; flex: 1; justify-content: center;" onclick="runKiviStudio()">
+                ✨ Format with Kivi AI
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Studio Results Box -->
+          <div id="studio-results-box" style="display: none; margin-top: 20px; background: rgba(0,0,0,0.5); border: 1px solid rgba(46, 213, 115, 0.3); border-radius: 12px; padding: 20px;">
+            <!-- Rendered via JS -->
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 6: 🪪 Insti ID OCR Portal               -->
+    <!-- ========================================== -->
+    <section id="tab-verification" class="tab-content">
+      <div class="verification-card">
+        <div style="text-align: center;">
+          <h2 style="font-size: 22px; font-weight: 800; color: #fff;">Sarvam Document AI OCR Portal</h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            Closed verified campus network. Upload an image of an ID card — Sarvam Document AI digitises layout & text, and Sarvam 105B validates enrollment.
+          </p>
+        </div>
+
+        <!-- Real Image Upload Drop Zone -->
+        <div class="id-card-preview" id="id-drop-zone" onclick="document.getElementById('id-file-input').click()">
+          <span style="font-size: 36px;">🪪</span>
+          <div style="font-weight: 700; color: #fff;" id="id-drop-title">Upload IIIT-H Student ID Card</div>
+          <div style="font-size: 12px; color: var(--text-muted);" id="id-drop-subtitle">PNG, JPEG, or PDF image accepted</div>
+          <input type="file" id="id-file-input" accept="image/png, image/jpeg, image/jpg, application/pdf" style="display: none;" onchange="handleIdFileSelect(event)">
+        </div>
+
+        <!-- Quick Sample Test Button -->
+        <button class="tab-btn" style="background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); color: #ffd32a; font-size: 12px; justify-content: center;" onclick="testSampleIdCard()">
+          ⚡ Quick Test: Run Sarvam Doc AI on Sample IIIT-H Student Card
+        </button>
+
+        <div class="form-group">
+          <label>Institutional Email (@students.iiit.ac.in)</label>
+          <input type="email" id="verify-email" value="arjun.mehta@students.iiit.ac.in">
+        </div>
+
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="verify-name" value="Arjun Mehta">
+        </div>
+
+        <div class="form-group">
+          <label>Department / Branch</label>
+          <select id="verify-branch">
+            <option value="CSE 3rd Year">CSE (Computer Science & Engineering)</option>
+            <option value="ECE 3rd Year">ECE (Electronics & Communication)</option>
+            <option value="Dual Degree (CLD)">Dual Degree (CLD / Computational Linguistics)</option>
+            <option value="Dual Degree (CND)">Dual Degree (CND / Natural Sciences)</option>
+            <option value="CSD">CSD (Computer Science & Design)</option>
+          </select>
+        </div>
+
+        <button class="tab-btn" id="btn-submit-verify" style="background: var(--accent-saffron); color: #fff; padding: 14px; font-size: 15px; font-weight: 800; justify-content: center; border-radius: 8px;" onclick="submitVerification()">
+          🛡️ Run Sarvam Document AI OCR & Verify
+        </button>
+
+        <div id="verification-result-box" style="display: none; background: rgba(46, 213, 115, 0.1); border: 1px solid rgba(46, 213, 115, 0.3); border-radius: 8px; padding: 16px; font-size: 13px; color: #2ed573;">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 7: 🔒 Consent & Safety Vault            -->
+    <!-- ========================================== -->
+    <section id="tab-safety" class="tab-content">
+      <div style="max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px;">
+        
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 26px;">
+          <h2 style="font-size: 22px; font-weight: 800; color: #fff;">Voice Changes the Safety Math</h2>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+            On a small campus like IIIT-H (~3,000 students), social risk is real. Suno builds consent-first privacy directly into the core architecture.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 20px;">
+            
+            <div style="display: flex; gap: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px;">
+              <span style="font-size: 26px;">🔓</span>
+              <div>
+                <strong style="color: #fff; font-size: 14px;">Mutual Reveal Consent</strong>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                  Real photos, institutional email, and real names remain encrypted and blurred until BOTH parties explicitly click "Consent to Reveal". Always reversible.
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px;">
+              <span style="font-size: 26px;">⏳</span>
+              <div>
+                <strong style="color: #fff; font-size: 14px;">Ephemeral Voice Notes</strong>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                  Voice notes self-destruct after 1 play by default. No downloads, no forward button, no screenshots.
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px;">
+              <span style="font-size: 26px;">📍</span>
+              <div>
+                <strong style="color: #fff; font-size: 14px;">Campus-Aware Coarse Nudges</strong>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                  Location matching never tracks or displays real-time GPS coordinates. It only recommends public campus landmarks (Tantra, JC, BBC, Kadamba) when both users are free.
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px;">
+              <span style="font-size: 26px;">🛡️</span>
+              <div>
+                <strong style="color: #fff; font-size: 14px;">Sarvam 105B Safety Moderation</strong>
+                <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                  Automatic tone and harassment filters flag unsolicited explicit content or campus doxxing before it is heard.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- LIVE MICROPHONE MODAL                      -->
+  <!-- ========================================== -->
+  <div id="live-record-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: var(--bg-card); border: 1px solid var(--accent-saffron); border-radius: var(--radius-lg); padding: 30px; max-width: 480px; width: 90%; display: flex; flex-direction: column; gap: 18px; box-shadow: var(--glow-card);">
+      
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 18px; font-weight: 800; color: #fff;">🎙️ Record Live Voice Intro</h3>
+        <button onclick="closeLiveRecordModal()" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+
+      <div style="font-size: 12px; color: var(--text-muted);">
+        Answer this campus prompt in ~15-30 seconds. Speak naturally in Hinglish, Tenglish, or English:
+      </div>
+      <div style="background: rgba(255,255,255,0.04); border-left: 3px solid var(--accent-saffron); padding: 10px 14px; font-weight: 600; color: #ffd32a;" id="modal-prompt-text">
+        "Pitch your Felicity plan or defend your mess order"
+      </div>
+
+      <!-- Real Live Audio Waveform Canvas -->
+      <canvas id="live-mic-canvas" width="420" height="70" style="background: rgba(0,0,0,0.4); border-radius: 8px; width: 100%;"></canvas>
+
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span id="record-timer" style="font-family: monospace; font-size: 16px; font-weight: 700; color: #ff4757;">00:00</span>
+        <span id="record-status" style="font-size: 12px; color: var(--text-muted);">Ready to record</span>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button class="tab-btn" id="btn-toggle-record" style="flex: 1; background: #ff4757; color: #fff; font-weight: 800; justify-content: center; padding: 12px;" onclick="toggleLiveRecording()">
+          🔴 Start Recording
+        </button>
+        <button class="tab-btn" id="btn-submit-record" style="flex: 1; background: var(--accent-saffron); color: #fff; font-weight: 800; justify-content: center; padding: 12px; display: none;" onclick="submitLiveVoiceBio()">
+          🚀 Transcribe with Saaras
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Audio Element for Playback -->
+  <audio id="global-audio-player"></audio>
+
+  <!-- Toast Notification -->
+  <div id="toast">Notification message</div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

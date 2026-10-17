@@ -1,0 +1,6 @@
+.env
+.venv/
+__pycache__/
+sample_voice.wav
+test_apis.py
+test_speakers.py
